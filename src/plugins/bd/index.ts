@@ -1,9 +1,6 @@
 import type { FastifyInstance } from "fastify";
 import postgres from '@fastify/postgres'
 
-
-
-
 export const initBD = async (fastify: FastifyInstance) => {
     fastify.log.info('Start inited data base')
 
