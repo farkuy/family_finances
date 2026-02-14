@@ -7,14 +7,14 @@ import postgres from '@fastify/postgres'
 export const initBD = async (fastify: FastifyInstance) => {
     fastify.log.info('Start inited data base')
 
-    const envs = fastify.getEnvs<{
+    const env = fastify.getEnvs<{
         DB_USER: string;
         DB_PASSWORD: string;
         DB_HOST: string;
         DB_PORT: string;
         DB_NAME: string;
     }>();
-    const path = `postgres://${envs.DB_USER}:${envs.DB_PASSWORD}@${envs.DB_HOST}:${envs.DB_PORT}/${envs.DB_NAME}`
+    const path = `postgres://${env.DB_USER}:${env.DB_PASSWORD}@${env.DB_HOST}:${env.DB_PORT}/${env.DB_NAME}`
 
     try {
         await fastify.register(postgres, {
