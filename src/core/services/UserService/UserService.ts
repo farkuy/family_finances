@@ -1,5 +1,5 @@
-import type { User } from "../../entities/User/User.ts";
-import type { UserIdDto } from "../../repositories/UserRepository/dto/index.ts";
+import type { User } from "../../entities/index.js";
+import type { CreateUserDto, UpdateUserDto, UserIdDto } from "../../repositories/UserRepository/dto/index.ts";
 import type { UserRepository } from "../../repositories/UserRepository/UserRepository.ts";
 
 export class UserService {
@@ -7,12 +7,14 @@ export class UserService {
         readonly userRepository: UserRepository
     ) { }
 
-    async create(): Promise<User> {
+    async create(user: CreateUserDto): Promise<User> {
         //Добавить логику валидации и проверки данных
-        return await this.userRepository.create({
-            email: 'random@mail.ru',
-            name: 'randomName'
-        })
+        return await this.userRepository.create(user)
+    }
+
+    async update(id: UserIdDto, user: UpdateUserDto): Promise<User> {
+        //Добавить логику валидации и проверки данных
+        return await this.userRepository.update(id, user)
     }
 
     async delete(id: UserIdDto) {
