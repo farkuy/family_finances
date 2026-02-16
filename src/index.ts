@@ -8,7 +8,6 @@ const server = fastify({
 
 await loadEnv(server)
 await initBD(server)
-
 await server.register(userRoutes, { prefix: '/api' });
 
 server.listen({ port: 8080 }, (err, address) => {
