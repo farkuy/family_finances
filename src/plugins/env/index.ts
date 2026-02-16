@@ -16,9 +16,7 @@ export const loadEnv = async (fastify: FastifyInstance) => {
         },
         dotenv: true,
         data: process.env
-    }).ready((err) => {
-        if (err) fastify.log.error(err)
-        fastify.log.info(fastify.getEnvs())
     })
+
     await fastify.after()
 }

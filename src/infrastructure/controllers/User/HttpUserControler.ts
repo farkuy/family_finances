@@ -4,11 +4,11 @@ import type { UserService } from "../../../core/services/UserService/UserService
 export class HttpUserControler {
     constructor(private userService: UserService) { }
 
-    async create(request: FastifyRequest, reply: FastifyReply) {
-        console.log(request)
+    create = async (request: FastifyRequest, reply: FastifyReply) => {
+        const { email, name } = request.body
         const res = await this.userService.create({
-            "email": '@23232',
-            name: "3d2e2"
+            email,
+            name,
         })
 
         return res
