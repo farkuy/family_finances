@@ -1,8 +1,6 @@
-import fastify, { type FastifyInstance } from 'fastify'
-import { loadEnv, initBD } from './plugins/index.js'
-import { PgUserRepository } from './infrastructure/bd/User/PgUserRepository.js'
-import { UserService } from './core/services/UserService/UserService.js'
-import { HttpUserControler } from './infrastructure/controllers/User/HttpUserControler.js'
+import fastify from 'fastify'
+import { initBD, loadEnv } from './plugins/index.js'
+import { userRoutes } from './plugins/router/index.js'
 
 const server = fastify({
     logger: true,
@@ -10,14 +8,6 @@ const server = fastify({
 
 await loadEnv(server)
 await initBD(server)
-
-async function userRoutes(fastify: FastifyInstance) {
-    const userPg = new PgUserRepository(fastify.pg);
-    const userService = new UserService(userPg);
-    const controller = new HttpUserControler(userService);
-
-    fastify.post('/user', controller.create.bind(controller));
-}
 
 await server.register(userRoutes, { prefix: '/api' });
 

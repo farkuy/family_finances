@@ -3,19 +3,21 @@ import type { CreateUserDto, UpdateUserDto, UserIdDto } from "../../repositories
 import type { UserRepository } from "../../repositories/UserRepository/UserRepository.ts";
 
 export class UserService {
-    constructor(readonly userRepository: UserRepository) { }
+    constructor(
+        readonly userRepository: UserRepository
+    ) { }
 
-    create = async (user: CreateUserDto): Promise<User> => {
-        console.log('in service');
-        return await this.userRepository.create(user);
-    };
+    async create(user: CreateUserDto): Promise<User> {
+        console.log('in service')
+        return await this.userRepository.create(user)
+    }
 
-    update = async (id: UserIdDto, user: UpdateUserDto): Promise<User> => {
-        // Добавить логику валидации и проверки данных
-        return await this.userRepository.update(id, user);
-    };
+    async update(id: UserIdDto, user: UpdateUserDto): Promise<User> {
+        //Добавить логику валидации и проверки данных
+        return await this.userRepository.update(id, user)
+    }
 
-    delete = async (id: UserIdDto): Promise<void> => {
-        await this.userRepository.delete(id);
-    };
+    async delete(id: UserIdDto) {
+        await this.userRepository.delete(id)
+    }
 }
