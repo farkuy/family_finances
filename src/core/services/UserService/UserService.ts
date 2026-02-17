@@ -8,12 +8,10 @@ export class UserService {
     ) { }
 
     async create(user: CreateUserDto): Promise<User> {
-        console.log('in service')
         return await this.userRepository.create(user)
     }
 
     async update(id: UserIdDto, user: UpdateUserDto): Promise<User> {
-        //Добавить логику валидации и проверки данных
         return await this.userRepository.update(id, user)
     }
 

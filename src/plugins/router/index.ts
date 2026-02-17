@@ -1,7 +1,11 @@
 import type { FastifyInstance } from "fastify";
-import { httpUserController } from "./handlers/user.js";
+import { httpUserControllersRegister } from "./handlers/User/user.js";
 
-export async function userRoutes(fastify: FastifyInstance) {
-    const userController = httpUserController(fastify)
-    fastify.post('/user', userController.create);
+async function userRoutes(fastify: FastifyInstance) {
+    httpUserControllersRegister(fastify)
+}
+
+
+export async function startRoute(fastify: FastifyInstance) {
+    await fastify.register(userRoutes, { prefix: '/api' })
 }

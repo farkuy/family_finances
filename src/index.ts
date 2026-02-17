@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 import { initBD, loadEnv } from './plugins/index.js'
-import { userRoutes } from './plugins/router/index.js'
+import { startRoute } from './plugins/router/index.js'
 
 const server = fastify({
     logger: true,
@@ -8,7 +8,7 @@ const server = fastify({
 
 await loadEnv(server)
 await initBD(server)
-await server.register(userRoutes, { prefix: '/api' });
+await startRoute(server)
 
 server.listen({ port: 8080 }, (err, address) => {
     if (err) {
