@@ -7,11 +7,11 @@ export class UserService {
         readonly userRepository: UserRepository
     ) { }
 
-    async create(user: CreateUserDto): Promise<User> {
+    async create(user: CreateUserDto): Promise<User | undefined> {
         return await this.userRepository.create(user)
     }
 
-    async update(id: UserIdDto, user: UpdateUserDto): Promise<User> {
+    async update(id: UserIdDto, user: UpdateUserDto): Promise<User | undefined> {
         return await this.userRepository.update(id, user)
     }
 

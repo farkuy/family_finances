@@ -1,5 +1,5 @@
 import type { FastifyInstance } from "fastify";
-import type { User } from "../../../../core/entities/index.js";
+import { User } from "../../../../core/entities/index.js";
 import type { UserRepository } from "../../../../core/repositories/UserRepository/UserRepository.js";
 import type { CreateUserDto, UpdateUserDto, UserIdDto } from "../../../../core/repositories/UserRepository/dto/index.js";
 
@@ -7,11 +7,12 @@ import type { CreateUserDto, UpdateUserDto, UserIdDto } from "../../../../core/r
 export class PgUserRepository implements UserRepository {
     constructor(private pg: FastifyInstance['pg']) { }
 
-    async create(dto: CreateUserDto): Promise<User | undefined> {
+    async create(dto: CreateUserDto): Promise<User | Error> {
         try {
+            const user = User.validate(dto.email, dto.name);
             const res = await this.pg.query<User>(
                 'INSERT INTO users (email, name) VALUES ($1, $2) RETURNING *',
-                [dto.email, dto.name]
+                [user.email, user.name]
             )
             return res.rows[0]
         } catch (e) {
@@ -20,6 +21,7 @@ export class PgUserRepository implements UserRepository {
     }
 
     async update(id: UserIdDto, dto: UpdateUserDto) {
+        const user = User.validate(dto.email, dto.name);
         const res = await this.pg.query(
             'UPDATE users SET email = $1, name = $2 WHERE id = $3 RETURNING *',
             [dto.email, dto.name, id]
